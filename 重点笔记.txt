@@ -1,0 +1,62 @@
+setState:为什么设计成异步的？
+如果短时间内发生多次的state数据改变，那么虚拟DOM每次都要去比对，很浪费性能，设计成异步后，他可以在一定时间内将发生改变的地方，一起进行虚拟DOM对比。
+
+
+diff算法：
+虚拟DOM和真是DOM对比的时候，先从最顶层开始对比（同层对比），一旦发现不一样，将改层级真实DOM下面的节点，
+全部删除，然后生成新的真实DOM 
+
+react中做列表循环时，key值得重要性：
+因为在虚拟DOM和真实DOM对比的过程中，他们是根据key值进行对比的。
+而且，尽量最好别用index值作为key值，因为index值可能会发生变化
+
+
+ref
+写法：主要用于操作DOM。
+ref = {(input) =>{ this.input = input} } //函数的方式引用
+尽量不用就别用，有时候会遇到奇怪的问题。
+
+新的setState写法：
+用的是函数式写法，不再是赋值对象的方式了
+比如：this.setState((prev)=>({
+    list,
+    text:''
+  }))
+其中prev参数指的是，前一次的参数。
+他还可以接受第二个参数，第二个参数用于，当异步执行完成之后的回调函数。
+比如：
+this.setState((prev)=>({
+    list,
+    text:''
+  })，（）=>{回调函数.......})
+
+componentWillMount( ）在组件即将被挂载到页面之前执行（页面渲染之前执行）
+
+render( ) 做页面的挂载 （state或者props更新之后，也会自动调用render函数）
+
+componentDidMount( )  在组件被挂在到页面之后，执行
+
+shouldComponentUpdate( ) 在组件被更新之前，自动执行 需要return一个boolean值（允许更新或者不更新）
+
+componentWillUpdate( ) 执行的前提条件是，shouldComponentUpdate返回的true
+
+componentDidUpdate( ) 组件完成更新之后，自动执行
+
+componentWillReceiveProps( ) 
+执行条件：
+1.一个组件要从父组件接受参数  
+2.这个子组件第一次存在父组件中，不会执行
+3. 如果这个组件之前存在于父组件中，才会执行
+
+componentWillUnmount( )  当组件即将被从页面中剔除的时候，会被执行
+ 
+
+
+
+
+
+
+
+
+
+

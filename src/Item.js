@@ -15,6 +15,13 @@ class Item extends Component {
     const {index} =this.props 
     this.props.deleteItem(index)
   }
+  shouldComponentUpdate(nextProps,nextState) {
+    if(nextProps.content !==this.props.content){
+      return true
+    }else {
+      return false
+    }
+  }
   componentWillReceiveProps() {
     console.log('我是子组件的receiveProps函数')
   }
